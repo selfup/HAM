@@ -10,8 +10,8 @@ const express = require('express'),
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.post('/', (req, res) => {
-  const position = req.headers.dial
-  clri.exec(`cd ~/HAM && python dial.py ${position}`)
+  const payload = req.headers.payload
+  clri.exec(`cd ~/HAM && python dial.py ${payload}`)
   res.send('GOT IT - RUNNING GPIO SCRIPT')
 })
 
