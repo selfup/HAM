@@ -2,7 +2,7 @@ import serial
 import time
 import requests
 
-ser = serial.Serial('/dev/ttyUSB0')
+ser = serial.Serial('COM1')
 
 ser.flushInput()
 ser.flushOutput()
