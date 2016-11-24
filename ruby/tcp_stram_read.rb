@@ -1,10 +1,11 @@
 require 'socket'
 require 'pp'
+require 'pry'
 
 s = TCPSocket.new '10.0.0.18', 4992
 
 format_it = -> msg {
-  msg[0]
+  msg
     .dup
     .split("\n")
     .map { |e| e.split(' ') }
@@ -12,7 +13,7 @@ format_it = -> msg {
 }
 
 loop do
-  msg = s.recvmsg
+  msg = s.recv(1000)
   pp format_it.(msg)
   puts '-----------------------------------------------------------------------'
 end
