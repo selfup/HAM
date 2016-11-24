@@ -12,8 +12,11 @@ format_it = -> msg {
     .map { |e| key = e[0]; e.shift; {key => e} }
 }
 
+s.puts('c1|sub slice all')
+
 loop do
   msg = s.recv(1000)
+  s.write('c1|sub slice all')
   pp format_it.(msg)
   puts '-----------------------------------------------------------------------'
 end
