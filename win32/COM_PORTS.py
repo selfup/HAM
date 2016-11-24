@@ -1,9 +1,7 @@
-# import serial
-# import time
-# import requests
-
 import serial
-from time import sleep
+import time
+import requests
+
 ser = serial.Serial('/dev/cu.usbserial-AD02GOSD')
 ser.baudrate = 9600
 ser.timeout = 1
