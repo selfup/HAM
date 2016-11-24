@@ -1,23 +1,35 @@
+# import serial
+# import time
+# import requests
+
 import serial
-import time
-import requests
-
-ser = serial.Serial('COM1')
-
-ser.flushInput()
-ser.flushOutput()
-
+from time import sleep
+ser = serial.Serial('/dev/cu.usbserial-AD02GOSD')
+ser.baudrate = 9600
+ser.timeout = 1
+ser.setDTR(1)
 
 while True:
-    print ser
+    print(ser.isOpen())
+    print ser.inWaiting()
+
+    s = ser.read(1)
+    print s.__len__()
 
     bytesToRead = ser.inWaiting()
-    readBytes   = ser.read(bytesToRead)
+    readBytes   = ser.readline()
 
-    print "READING\n\n"
+    print "---------------------"
+    print bytesToRead
     print readBytes
+    tenBytes = ser.read(10)
 
-    # time.sleep(0.013) # delays for BAUD RATE seconds
+    print "--"
+    print tenBytes
+    print "--"
+    print "---------------------"
+
+    time.sleep(0.013) # delays for BAUD RATE seconds
 
     atenna_mode = ""
 
@@ -40,3 +52,5 @@ while True:
         print res
     else:
         print 'UHH OH'
+
+    time.sleep(2)
