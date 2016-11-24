@@ -1,6 +1,5 @@
 require 'socket'
 require 'pp'
-require 'pry'
 
 s = TCPSocket.new '10.0.0.18', 4992
 
