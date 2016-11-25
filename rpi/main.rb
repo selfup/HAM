@@ -22,7 +22,7 @@ require 'pi_piper'
 @pins = {}
 
 %w(1 2 3 4 5 6 7 8).each do |pin|
-  @pins[pin] = PiPiper::Pin.new(pin: payload_to_pin_key[pin], direction: :out)
+  @pins[pin] = PiPiper::Pin.new(pin: @payload_to_pin_key[pin], direction: :out)
 end
 
 # if respective key:value is set to true -> turn on GPIO pin
