@@ -77,12 +77,16 @@ pin_logic_gate = -> pins do
   end
 end
 
-loop do
-  msg = @socket.recv(1000)
+read_and_update = -> msg do
   response = format_it.(msg)
   slices = tx_slices.(response)
   slice_formatter.(slices)
   pin_logic_gate.(default_pins)
-  pp @app_slices
-  puts "\n------------------------------------\n\n"
+end
+
+loop do
+  msg = @socket.recv(1000)
+  read_and_update.(msg)
+  puts Time.now
+  puts "\n--------\n\n"
 end

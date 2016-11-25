@@ -4,9 +4,13 @@
 
 **WIP**: Work in Progress :joy:
 
+# INSTRUCTIONS
+
 ***
 
-# INSTRUCTIONS
+If you already have ruby 2.3.1 or greater, and rvm or rbenv, just get the sudo package for either tools (rvmsudo) or (rbenvsudo) and go to the section with a checkmark in the title. Enjoy talking to your flex radio with a raspberry pi!
+
+***
 
 Ruby version and tools required for this to run on a raspberry pi:
 
