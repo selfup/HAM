@@ -2,19 +2,40 @@
 
 ### Automated Antenna Controller
 
+**WIP**: Work in Progress :joy:
+
 ***
 
 # INSTRUCTIONS
 
-If you do not have ruby on a raspberry pi:
+Ruby version and tools required for this to run on a raspberry pi:
 
-Highly recommend using `rbenv` and you will need the `rbenv sudo` plugin to run the GPIO ports
+### Git
+If you do not have **git** installed:
 
-Install ruby 2.3.1 or greater on a raspberry pi (rbenv, rvm, or chruby)
+  `sudo apt-get update && sudo apt-get install git -y`
+### rbenv
+ Follow [THIS](http://www.iconoclastlabs.com/blog/ruby-on-rails-on-the-raspberry-pi-b-with-rbenv) tutorial (CHANGE 2.1.2 to 2.3.1) and *stop* at the **Moving To Rails** section
 
-`gem install bundler`
+### rbenv sudo
 
-***
+  Once you have installed ruby 2.3.1 with `rbenv`
+
+  **If** `ruby -v` does not say *2.3.1* **or** *greater* and you followed the rbenv tutorial do the following and wait:
+
+  ```
+  rbenv install 2.3.1 && rbenv global 2.3.1 && rbenv rehash
+  ```
+
+  Now **actually install** `rbenv sudo`
+
+  `git clone git://github.com/dcarley/rbenv-sudo.git ~/.rbenv/plugins/rbenv-sudo`
+
+:tada:
+
+### Ruby 2.3.1 - Rbenv - Rbenv Sudo :white_check_mark:
+
+1. `gem install bundler`
 
 1. `cd` into this project dir after cloning:
 
@@ -26,14 +47,7 @@ Install ruby 2.3.1 or greater on a raspberry pi (rbenv, rvm, or chruby)
 
 ### What to Run
 
-**host** dir: run `ruby host/main.rb`
-
-  1. This can run on a raspberry pi
-  1. This can run on another machine: *min::ruby 2.3.1 - (no need to bundle)*
-
-**rpi** dir: run `rbenv sudo ruby rpi/main.rb -o 0.0.0.0`
-
-  1. This must run on a raspberry pi :joy:
+`rbenv sudo ruby main.rb`
 
 # DISCLAIMER
 

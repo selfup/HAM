@@ -4,16 +4,9 @@ require 'pi_piper'
 require 'pry'
 
 @app_slices = {}
-
 @app_pins = {}
-
-@valid_atennas = {
-  "ANT2" => true
-}
-
-@atenna_payload_key = {
-  "ANT2" => "0"
-}
+@valid_atennas = {"ANT2" => true}
+@atenna_payload_key = {"ANT2" => "0"}
 
 default_pins = {
   15 => false,
@@ -26,25 +19,21 @@ default_pins = {
   26 => false
 }
 
-def new_pin_state(new_state)
-  @pins = @pins.merge(new_state)
-end
-
 default_pins.each do |pin, v|
   @app_pins[pin] = PiPiper::Pin.new(
     pin: pin, direction: :out
   )
 end
 
-format_it = -> msg {
+format_it = -> msg do
   msg
     .dup
     .split("\n")
     .map { |e| e.split(' ') }
     .map { |e| key = e[0]; e.shift; {key => e} }
-}
+end
 
-tx_slices = -> response {
+tx_slices = -> response do
   response
     .map do |e|
       type = e.keys[0].split('|')
@@ -53,13 +42,14 @@ tx_slices = -> response {
       else
         e.keys[0] = 0
       end
-    end
-    .select { |e| e != 0 }
-}
+    end.select { |e| e != 0 }
+end
 
-app_state_updater = -> new_slice, new_values, slice_number {
-  pre_format = new_slice.map { |e| e.split("=") }
-  pre_format.each { |e| new_values[e[0]] = e[1] }
+app_state_updater = -> new_slice, new_values, slice_number do
+  pre_format = new_slice
+    .map { |e| e.split("=") }
+    .each { |e| new_values[e[0]] = e[1] }
+
   if !@app_slices.keys.include?(slice_number)
     @app_slices[slice_number] = new_values
   else
@@ -67,7 +57,7 @@ app_state_updater = -> new_slice, new_values, slice_number {
   end
 }
 
-slice_formatter = -> slices {
+slice_formatter = -> slices do
   slices.map do |slice|
     new_values = {}
     new_slice = slice.values[0]
@@ -75,17 +65,17 @@ slice_formatter = -> slices {
     new_slice.shift
     app_state_updater.(new_slice, new_values, slice_number)
   end
-}
+end
 
 @socket = TCPSocket.new('10.0.0.18', 4992)
 @socket.puts('c1|sub slice all')
 
-pin_logic_gate = -> pins {
-  pins.each { |k, v|
+pin_logic_gate = -> pins do
+  pins.each do |k, v|
     return @app_pins[k].on if v
     return @app_pins[k].off if !v
-  }
-}
+  end
+end
 
 loop do
   msg = @socket.recv(1000)
