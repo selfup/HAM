@@ -8,7 +8,7 @@ require 'pi_piper'
 # GPIO pin numbers -> 2, 3, 4, 17, 27, 22, 10, 9
 
 # translates payload keys to selected GPIO pins
-payload_to_pin_key = {
+@payload_to_pin_key = {
   "1" => 15,
   "2" => 16,
   "3" => 18,
@@ -27,7 +27,7 @@ end
 
 # if respective key:value is set to true -> turn on GPIO pin
 # if respective key:value is set to false -> turn off GPIO pin
-pin_logic_gate = -> pins {
+@pin_logic_gate = -> pins {
   pins.each { |k, v|
     return @pins[k].on if v
     return @pins[k].off if !v
@@ -40,5 +40,5 @@ pin_logic_gate = -> pins {
 post '/' do
   payload = JSON.parse(request.body.read)
   pins = payload["pins"]
-  pin_logic_gate.(pins) if pins.keys.length == 8
+  @pin_logic_gate.(pins)
 end
