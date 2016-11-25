@@ -25,6 +25,25 @@ payload_to_pin_key = {
 
 @app_pins = {}
 
+def default_pins
+  {
+    "pins" => {
+      1 => false,
+      2 => false,
+      3 => false,
+      4 => false,
+      5 => false,
+      6 => false,
+      7 => false,
+      8 => false
+    }
+  }
+end
+
+def new_pin_state(new_state)
+  @pins = @pins.merge(new_state)
+end
+
 %w(1 2 3 4 5 6 7 8).each do |pin|
   @app_pins[pin] = PiPiper::Pin.new(
     pin: payload_to_pin_key[pin], direction: :out
@@ -77,8 +96,8 @@ slice_formatter = -> slices {
 
 pin_logic_gate = -> pins {
   pins.each { |k, v|
-    return app_pins[k].on if v
-    return app_pins[k].off if !v
+    return @app_pins[k].on if v
+    return @app_pins[k].off if !v
   }
 }
 
@@ -88,6 +107,6 @@ loop do
   slices = tx_slices.(response)
   slice_formatter.(slices)
   pp @app_slices
-  pin_logic_gate(@app_slices)
+  pin_logic_gate(default_pins)
   puts "\n------------------------------------\n\n"
 end
