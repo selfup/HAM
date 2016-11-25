@@ -1,9 +1,8 @@
 require 'socket'
 require 'pp'
-require './post'
+require_relative './payload'
 
-s = TCPSocket.new '10.0.0.18', 4992
-
+# parsing and transalation functions ##########################################
 format_it = -> msg {
   msg
     .dup
@@ -12,10 +11,33 @@ format_it = -> msg {
     .map { |e| key = e[0]; e.shift; {key => e} }
 }
 
-s.puts('c1|sub slice all')
+tx_slices = -> response {
+  response
+    .map do |e|
+      type = e.keys[0].split('|')
+      if type[1] == "radio"
+        {"slice" => e.values}
+      else
+        e.keys[0] = 0
+      end
+    end
+    .select { |e| e != 0 }
+}
+# end of parsing functions ####################################################
+
+@socket  ||= TCPSocket.new('10.0.0.18', 4992)
+@payload ||= Payload.new
+
+# start receiving all slices from flex on TCP socket
+@socket.puts('c1|sub slice all')
+
+# send default GPIO config to sinatra app
+@payload.post
 
 loop do
-  msg = s.recv(1000)
-  pp format_it.(msg)
+  msg = @socket.recv(1000)
+  response = format_it.(msg)
+  slices = tx_slices.(response)
+  pp slices
   puts '-----------------------------------------------------------------------'
 end

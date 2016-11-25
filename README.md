@@ -6,8 +6,6 @@
 
 # INSTRUCTIONS
 
-***
-
 If you do not have ruby on a raspberry pi:
 
 Install ruby 2.3.1 or greater on a raspberry pi (rbenv, rvm, or chruby)
