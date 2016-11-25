@@ -1,6 +1,7 @@
 require 'socket'
 require 'pp'
 require 'pi_piper'
+require 'pry'
 
 @app_slices = {}
 
@@ -107,6 +108,7 @@ loop do
   slices = tx_slices.(response)
   slice_formatter.(slices)
   pp @app_slices
+  binding.pry
   pin_logic_gate.(default_pins)
   puts "\n------------------------------------\n\n"
 end
