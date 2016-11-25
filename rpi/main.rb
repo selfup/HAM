@@ -9,14 +9,14 @@ require 'pi_piper'
 
 # translates payload keys to selected GPIO pins
 payload_to_pin_key = {
-  "1" => 2,
-  "2" => 3,
-  "3" => 4,
-  "4" => 17,
-  "5" => 27,
+  "1" => 15,
+  "2" => 16,
+  "3" => 18,
+  "4" => 19,
+  "5" => 21,
   "6" => 22,
-  "7" => 10,
-  "8" => 9
+  "7" => 23,
+  "8" => 24
 }
 
 @pins = {}
