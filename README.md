@@ -8,6 +8,8 @@
 
 If you do not have ruby on a raspberry pi:
 
+Highly recommend using `rbenv` and you will need the `rbenv sudo` plugin to run the GPIO ports
+
 Install ruby 2.3.1 or greater on a raspberry pi (rbenv, rvm, or chruby)
 
 `gem install bundler`
@@ -29,7 +31,7 @@ Install ruby 2.3.1 or greater on a raspberry pi (rbenv, rvm, or chruby)
   1. This can run on a raspberry pi
   1. This can run on another machine: *min::ruby 2.3.1 - (no need to bundle)*
 
-**rpi** dir: run `ruby rpi/main.rb -o 0.0.0.0`
+**rpi** dir: run `rbenv sudo ruby rpi/main.rb -o 0.0.0.0`
 
   1. This must run on a raspberry pi :joy:
 
