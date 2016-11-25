@@ -26,12 +26,12 @@ Install ruby 2.3.1 or greater on a raspberry pi (rbenv, rvm, or chruby)
 
 ### What to Run
 
-**host** dir: run `main.rb`
+**host** dir: run `ruby host/main.rb`
 
   1. This can run on a raspberry pi
   1. This can run on another machine: *min::ruby 2.3.1 - (no need to bundle)*
 
-**rpi** dir: run `main.rb`
+**rpi** dir: run `ruby rpi/main.rb -o 0.0.0.0`
 
   1. This must run on a raspberry pi :joy:
 

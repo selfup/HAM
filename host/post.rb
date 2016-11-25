@@ -1,5 +1,3 @@
-# from windows / mac / linux -- post request to raspberry pi
-
 require 'net/http'
 require 'json'
 
