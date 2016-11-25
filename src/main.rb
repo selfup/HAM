@@ -18,7 +18,7 @@ require_relative './fns'
 
 loop do
   msg = @socket.recv(1000)
-  read_and_update.(msg)
+  @read_and_update.(msg)
   puts Time.now
   puts "\n--------\n\n"
 end

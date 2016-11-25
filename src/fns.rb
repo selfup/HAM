@@ -1,4 +1,4 @@
-format_it = -> msg do
+@format_it = -> msg do
   msg
     .dup
     .split("\n")
@@ -10,7 +10,7 @@ format_it = -> msg do
     end
 end
 
-tx_slices = -> response do
+@tx_slices = -> response do
   response
     .map do |e|
       type = e.keys[0].split('|')
@@ -22,7 +22,7 @@ tx_slices = -> response do
     end.select { |e| e != 0 }
 end
 
-app_state_updater = -> new_slice, new_values, slice_number do
+@app_state_updater = -> new_slice, new_values, slice_number do
   pre_format = new_slice
     .map { |e| e.split("=") }
     .each { |e| new_values[e[0]] = e[1] }
@@ -34,13 +34,13 @@ app_state_updater = -> new_slice, new_values, slice_number do
   end
 end
 
-slice_formatter = -> slices do
+@slice_formatter = -> slices do
   slices.map do |slice|
     new_values = {}
     new_slice = slice.values[0]
     slice_number = new_slice[0]
     new_slice.shift
-    app_state_updater.(new_slice, new_values, slice_number)
+    @app_state_updater.(new_slice, new_values, slice_number)
   end
 end
 
@@ -51,9 +51,9 @@ pin_logic_gate = -> pins do
   end
 end
 
-read_and_update = -> msg do
-  response = format_it.(msg)
-  slices = tx_slices.(response)
-  slice_formatter.(slices)
+@read_and_update = -> msg do
+  response = @format_it.(msg)
+  slices = @tx_slices.(response)
+  @slice_formatter.(slices)
   pin_logic_gate.(default_pins)
 end
