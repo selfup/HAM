@@ -31,7 +31,7 @@ def new_pin_state(new_state)
 end
 
 default_pins.each do |pin, v|
-  app_pins[pin] = PiPiper::Pin.new(
+  @app_pins[pin] = PiPiper::Pin.new(
     pin: pin, direction: :out
   )
 end
@@ -83,8 +83,8 @@ slice_formatter = -> slices {
 pin_logic_gate = -> pins {
   pins.each { |k, v|
     binding.pry
-    return app_pins[k].on if v
-    return app_pins[k].off if !v
+    return @app_pins[k].on if v
+    return @app_pins[k].off if !v
   }
 }
 
