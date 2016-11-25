@@ -55,7 +55,7 @@ app_state_updater = -> new_slice, new_values, slice_number do
   else
     @app_slices[slice_number] = @app_slices[slice_number].merge(new_values)
   end
-}
+end
 
 slice_formatter = -> slices do
   slices.map do |slice|
