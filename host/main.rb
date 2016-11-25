@@ -23,7 +23,7 @@ payload_to_pin_key = {
   "8" => 26
 }
 
-@app_pins = {}
+app_pins = {}
 
 def default_pins
   {
@@ -45,7 +45,7 @@ def new_pin_state(new_state)
 end
 
 %w(1 2 3 4 5 6 7 8).each do |pin|
-  @app_pins[pin] = PiPiper::Pin.new(
+  app_pins[pin] = PiPiper::Pin.new(
     pin: payload_to_pin_key[pin], direction: :out
   )
 end
@@ -96,8 +96,8 @@ slice_formatter = -> slices {
 
 pin_logic_gate = -> pins {
   pins.each { |k, v|
-    return @app_pins[k].on if v
-    return @app_pins[k].off if !v
+    return app_pins[k].on if v
+    return app_pins[k].off if !v
   }
 }
 
