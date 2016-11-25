@@ -24,6 +24,17 @@ Install ruby 2.3.1 or greater on a raspberry pi (rbenv, rvm, or chruby)
 
   ..and wait a while :smile:
 
+### What to Run
+
+**host** dir: run `main.rb`
+
+  1. This can run on a raspberry pi
+  1. This can run on another machine: *min::ruby 2.3.1 - (no need to bundle)*
+
+**rpi** dir: run `main.rb`
+
+  1. This must run on a raspberry pi :joy:
+
 # DISCLAIMER
 
 This a continuation of *HAM Radio* side projects
