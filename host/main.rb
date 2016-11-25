@@ -82,7 +82,6 @@ slice_formatter = -> slices {
 
 pin_logic_gate = -> pins {
   pins.each { |k, v|
-    binding.pry
     return @app_pins[k].on if v
     return @app_pins[k].off if !v
   }
