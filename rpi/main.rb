@@ -1,6 +1,6 @@
 # this is a sinatra web server that lives on a raspberry pi
 # it will receive a post request and then use pi_piper to turn on or off GPIO
-require 'sinatra'
+require 'sinatra/base'
 require 'json'
 require 'pi_piper'
 
@@ -19,18 +19,18 @@ payload_to_pin_key = {
   "8" => 26
 }
 
-@pins = {}
+app_pins = {}
 
 %w(1 2 3 4 5 6 7 8).each do |pin|
-  @pins[pin] = PiPiper::Pin.new(pin: payload_to_pin_key[pin], direction: :out)
+  app_pins[pin] = PiPiper::Pin.new(pin: payload_to_pin_key[pin], direction: :out)
 end
 
 # if respective key:value is set to true -> turn on GPIO pin
 # if respective key:value is set to false -> turn off GPIO pin
 pin_logic_gate = -> pins {
   pins.each { |k, v|
-    return @pins[k].on if v
-    return @pins[k].off if !v
+    return app_pins[k].on if v
+    return app_pins[k].off if !v
   }
 }
 
