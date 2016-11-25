@@ -51,7 +51,7 @@ If you do not have **git** installed:
 
 ### What to Run
 
-`rbenv sudo ruby main.rb`
+`rbenv sudo ruby src/main.rb`
 
 # DISCLAIMER
 
