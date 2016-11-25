@@ -1,5 +1,4 @@
 require 'socket'
-require 'pp'
 require 'pi_piper'
 require 'pry'
 
