@@ -30,7 +30,11 @@ format_it = -> msg do
     .dup
     .split("\n")
     .map { |e| e.split(' ') }
-    .map { |e| key = e[0]; e.shift; {key => e} }
+    .map do |e|
+      key = e[0]
+      e.shift
+      {key => e}
+    end
 end
 
 tx_slices = -> response do
@@ -67,9 +71,6 @@ slice_formatter = -> slices do
   end
 end
 
-@socket = TCPSocket.new('10.0.0.18', 4992)
-@socket.puts('c1|sub slice all')
-
 pin_logic_gate = -> pins do
   pins.each do |k, v|
     return @app_pins[k].on if v
@@ -83,6 +84,9 @@ read_and_update = -> msg do
   slice_formatter.(slices)
   pin_logic_gate.(default_pins)
 end
+
+@socket = TCPSocket.new('10.0.0.18', 4992)
+@socket.puts('c1|sub slice all')
 
 loop do
   msg = @socket.recv(1000)
