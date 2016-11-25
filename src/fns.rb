@@ -1,32 +1,3 @@
-require 'socket'
-require 'pp'
-require 'pi_piper'
-require 'pry'
-
-## state
-
-@app_slices = {}
-@app_pins = {}
-@valid_atennas = {"ANT2" => true}
-@atenna_payload_key = {"ANT2" => "0"}
-
-default_pins = {
-  15 => false,
-  16 => false,
-  18 => false,
-  19 => false,
-  21 => false,
-  22 => false,
-  23 => false,
-  26 => false
-}
-
-default_pins.each do |pin, v|
-  @app_pins[pin] = PiPiper::Pin.new(pin: pin, direction: :out)
-end
-
-## functions
-
 format_it = -> msg do
   msg
     .dup
@@ -85,16 +56,4 @@ read_and_update = -> msg do
   slices = tx_slices.(response)
   slice_formatter.(slices)
   pin_logic_gate.(default_pins)
-end
-
-## main
-
-@socket = TCPSocket.new('10.0.0.18', 4992)
-@socket.puts('c1|sub slice all')
-
-loop do
-  msg = @socket.recv(1000)
-  read_and_update.(msg)
-  puts Time.now
-  puts "\n--------\n\n"
 end
