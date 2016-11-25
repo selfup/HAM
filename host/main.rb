@@ -107,6 +107,6 @@ loop do
   slices = tx_slices.(response)
   slice_formatter.(slices)
   pp @app_slices
-  pin_logic_gate(default_pins)
+  pin_logic_gate.(default_pins)
   puts "\n------------------------------------\n\n"
 end
