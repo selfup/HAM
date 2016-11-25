@@ -13,41 +13,26 @@ require 'pry'
   "ANT2" => "0"
 }
 
-payload_to_pin_key = {
-  "1" => 15,
-  "2" => 16,
-  "3" => 18,
-  "4" => 19,
-  "5" => 21,
-  "6" => 22,
-  "7" => 23,
-  "8" => 26
-}
-
 app_pins = {}
 
-def default_pins
-  {
-    "pins" => {
-      1 => false,
-      2 => false,
-      3 => false,
-      4 => false,
-      5 => false,
-      6 => false,
-      7 => false,
-      8 => false
-    }
-  }
-end
+default_pins = {
+  15 => false,
+  16 => false,
+  18 => false,
+  19 => false,
+  21 => false,
+  22 => false,
+  23 => false,
+  26 => false
+}
 
 def new_pin_state(new_state)
   @pins = @pins.merge(new_state)
 end
 
-%w(1 2 3 4 5 6 7 8).each do |pin|
+default_pins.each do |pin, v|
   app_pins[pin] = PiPiper::Pin.new(
-    pin: payload_to_pin_key[pin], direction: :out
+    pin: pin, direction: :out
   )
 end
 
@@ -97,6 +82,7 @@ slice_formatter = -> slices {
 
 pin_logic_gate = -> pins {
   pins.each { |k, v|
+    binding.pry
     return app_pins[k].on if v
     return app_pins[k].off if !v
   }
@@ -109,6 +95,6 @@ loop do
   slice_formatter.(slices)
   pp @app_slices
   binding.pry
-  pin_logic_gate.(default_pins)
+  pin_logic_gate.(default_pins["pins"])
   puts "\n------------------------------------\n\n"
 end
