@@ -1,3 +1,6 @@
+# from windows / linux / mac
+# read flex-radio stream for all slices
+
 require 'socket'
 require 'pp'
 
@@ -15,7 +18,6 @@ s.puts('c1|sub slice all')
 
 loop do
   msg = s.recv(1000)
-  s.write('c1|sub slice all')
   pp format_it.(msg)
   puts '-----------------------------------------------------------------------'
 end
