@@ -19,19 +19,19 @@ payload_to_pin_key = {
   "8" => 9
 }
 
+@pins = {}
+
+%w(1 2 3 4 5 6 7 8).each do |pin|
+  @pins[pin] = PiPiper::Pin.new(pin: payload_to_pin_key[pin], direction: :out)
+end
+
 # if respective key:value is set to true -> turn on GPIO pin
 # if respective key:value is set to false -> turn off GPIO pin
 pin_logic_gate = -> pins {
-  puts pins # just for simple debugging
-  # pins.each { |k, v|
-  #   # each pins key value pair from payload -> ex: {"1": true}
-  #   # k means key here so: k -> "1"
-  #   # v just means value here so: v -> true
-  #   # this is referencing the default payload in: payload.rb
-  #   pin = PiPiper::Pin.new(:pin => payload_to_pin_key[k], :direction => :out)
-  #   return pin.on if v
-  #   return pin.off if !v
-  # }
+  pins.each { |k, v|
+    return @pins[k].on if v
+    return @pins[k].off if !v
+  }
 }
 
 # handle host post request
