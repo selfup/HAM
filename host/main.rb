@@ -1,5 +1,6 @@
 require 'socket'
 require 'pp'
+require 'pi_piper'
 require_relative './payload'
 
 @app_slices = {}
@@ -62,11 +63,42 @@ slice_formatter = -> slices {
 # send default GPIO config to sinatra app
 @payload.post
 
+# using raspberry pi GPIO bottom row pins (left to right)
+# GPIO pin numbers -> 2, 3, 4, 17, 27, 22, 10, 9
+
+# translates payload keys to selected GPIO pins
+payload_to_pin_key = {
+  "1" => 15,
+  "2" => 16,
+  "3" => 18,
+  "4" => 19,
+  "5" => 21,
+  "6" => 22,
+  "7" => 23,
+  "8" => 26
+}
+
+@app_pins = {}
+
+%w(1 2 3 4 5 6 7 8).each do |pin|
+  app_pins[pin] = PiPiper::Pin.new(pin: payload_to_pin_key[pin], direction: :out)
+end
+
+# if respective key:value is set to true -> turn on GPIO pin
+# if respective key:value is set to false -> turn off GPIO pin
+pin_logic_gate = -> pins {
+  pins.each { |k, v|
+    return app_pins[k].on if v
+    return app_pins[k].off if !v
+  }
+}
+
 loop do
   msg = @socket.recv(1000)
   response = format_it.(msg)
   slices = tx_slices.(response)
   slice_formatter.(slices)
   pp @app_slices
+  pin_logic_gate(@app_slices)
   puts "\n------------------------------------\n\n"
 end
