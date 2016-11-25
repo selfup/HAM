@@ -1,6 +1,6 @@
 # this is a sinatra web server that lives on a raspberry pi
 # it will receive a post request and then use pi_piper to turn on or off GPIO
-require 'sinatra/base'
+require 'sinatra'
 require 'json'
 require 'pi_piper'
 
