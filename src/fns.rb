@@ -55,5 +55,5 @@ end
   response = @format_it.(msg)
   slices = @tx_slices.(response)
   @slice_formatter.(slices)
-  pin_logic_gate.(default_pins)
+  pin_logic_gate.(@default_pins)
 end
