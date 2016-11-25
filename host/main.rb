@@ -5,6 +5,8 @@ require 'pry'
 
 @app_slices = {}
 
+@app_pins = {}
+
 @valid_atennas = {
   "ANT2" => true
 }
@@ -12,8 +14,6 @@ require 'pry'
 @atenna_payload_key = {
   "ANT2" => "0"
 }
-
-app_pins = {}
 
 default_pins = {
   15 => false,
@@ -93,8 +93,7 @@ loop do
   response = format_it.(msg)
   slices = tx_slices.(response)
   slice_formatter.(slices)
-  pp @app_slices
-  binding.pry
   pin_logic_gate.(default_pins)
+  pp @app_slices
   puts "\n------------------------------------\n\n"
 end
