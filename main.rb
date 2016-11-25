@@ -22,9 +22,7 @@ default_pins = {
 }
 
 default_pins.each do |pin, v|
-  @app_pins[pin] = PiPiper::Pin.new(
-    pin: pin, direction: :out
-  )
+  @app_pins[pin] = PiPiper::Pin.new(pin: pin, direction: :out)
 end
 
 ## functions
