@@ -39,5 +39,6 @@ loop do
   response = format_it.(msg)
   slices = tx_slices.(response)
   pp slices
+  pp response # more debugging
   puts '-----------------------------------------------------------------------'
 end
