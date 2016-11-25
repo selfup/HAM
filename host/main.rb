@@ -95,6 +95,6 @@ loop do
   slice_formatter.(slices)
   pp @app_slices
   binding.pry
-  pin_logic_gate.(default_pins["pins"])
+  pin_logic_gate.(default_pins)
   puts "\n------------------------------------\n\n"
 end
