@@ -40,5 +40,5 @@ pin_logic_gate = -> pins {
 post '/' do
   payload = JSON.parse(request.body.read)
   pins = payload["pins"]
-  pin_logic_gate(pins) if pins.keys.length == 8
+  pin_logic_gate.(pins) if pins.keys.length == 8
 end
