@@ -34,7 +34,6 @@ pin_logic_gate = -> pins {
   # }
 }
 
-binding.pry
 # handle host post request
 # grab payload and translate using payload_to_pin_key
 # once keys are translated -> send to parse gate to turn on or off GPIO pins
