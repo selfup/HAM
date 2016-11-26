@@ -37,5 +37,6 @@ end
 end
 
 @print_and_parse = -> msg do
+  p "PARSING"
   @update_pins.(JSON.parse(msg))
 end
