@@ -16,6 +16,8 @@ end
 end
 
 @update_pins = -> payload do
+  p payload
+  p "--------=-=-=-=-=-=-"
   if !payload.keys.include?("15")
     p "DISCOVERED"
   elsif payload.keys.include?("15")
