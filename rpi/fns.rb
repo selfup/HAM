@@ -5,20 +5,18 @@
   end
 end
 
-@print_or_close = -> msg, client do
+@print_or_close = -> msg do
   if msg == ""
     stream.close
   else
-    @print_and_parse.(msg, client)
+    @print_and_parse.(msg)
   end
 end
 
-@update_pins = -> payload, client do
+@update_pins = -> payload do
   p payload.keys.include?("15")
   if !payload.keys.include?("15")
     p "DISCOVERED"
-    client.sendmsg('hello!')
-    client.sendmsg("another hello\n")
   elsif payload.keys.include?("15")
     p "PAYLOAD"
     p Time.now.utc
@@ -38,6 +36,6 @@ end
   end
 end
 
-@print_and_parse = -> msg, client do
-  @update_pins.(JSON.parse(msg), client)
+@print_and_parse = -> msg do
+  @update_pins.(JSON.parse(msg))
 end

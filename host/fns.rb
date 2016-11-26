@@ -50,10 +50,10 @@ end
 
   if @valid_atennas[slice_antenna] && freq >= 3.5
     ant_to_gpio = @antenna_payload_key[slice_antenna]
-    @payload[ant_to_gpio] = true
+    @payload[ant_to_gpio] = false
   elsif @valid_atennas[slice_antenna] && freq < 3.5
     ant_to_gpio = @antenna_payload_key[slice_antenna]
-    @payload[ant_to_gpio] = false
+    @payload[ant_to_gpio] = true
   end
 
   p @payload
