@@ -17,5 +17,5 @@
 }
 
 @antenna_payload_key = {
-  "ANT2" => 18
+  "ANT2" => 17
 }
