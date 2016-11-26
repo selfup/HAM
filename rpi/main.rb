@@ -1,6 +1,8 @@
 require 'socket'
 require 'pi_piper'
 
+@app_pins = {}
+
 @default_pins = {
   15 => false,
   16 => false,
