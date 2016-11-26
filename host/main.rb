@@ -14,7 +14,7 @@ if __FILE__ == $0
   @flex_socket.puts('c1|sub slice all')
 
   @pi_socket = TCPSocket.new('10.0.0.230', 2000)
-  @pi_socket.write({hi: "hello"}.to_json)
+  # @pi_socket.write({hi: "hello"}.to_json)
 
   loop do
     # READ AND PARSE FLEX MESSAGES

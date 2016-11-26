@@ -57,6 +57,9 @@ end
 end
 
 @run_slices = -> do
+  puts "--OK--"
+  puts @app_slices.length
+  puts "--OK--"
   if @app_slices.length > 0
     @app_slices.each do |slice_number, slice_info|
       if slice_info["tx"] == "1"

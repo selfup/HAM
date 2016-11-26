@@ -15,7 +15,7 @@ end
 end
 
 @print_and_parse = -> msg, client do
-  @update_pins.(JSON.parse(msg))
+  @update_pins.(JSON.parse(msg, client))
 end
 
 @update_pins = -> payload, client do
