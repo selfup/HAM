@@ -8,15 +8,23 @@ require_relative './state'
 ## functions
 require_relative './fns'
 
-@pin_logic_gate.(@default_pins) # buid gpio_pins
-socket_server = TCPServer.open(2000)
+@pin_logic_gate.(@default_pins)
 
-while true
-  Thread.new(socket_server.accept) do |stream|
-    puts "INBOUND TRAFFIC FROM: #{stream.peeraddr[2]}"
-    loop do
-      msg = stream.recvmsg
-      @print_or_close.(msg[0])
+## main
+if __FILE__ == $0
+
+  socket_server = TCPServer.open(2000)
+
+  while true
+    Thread.new(socket_server.accept) do |client|
+      puts "INBOUND TRAFFIC FROM: #{client.peeraddr[2]}"
+      loop do
+        msg = client.recvmsg
+        client.puts('message received')
+        @print_or_close.(msg[0])
+        client.puts('message parsed')
+      end
     end
   end
+
 end

@@ -9,16 +9,21 @@ require_relative './state'
 require_relative './fns'
 
 ## main
-@flex_socket = TCPSocket.new('10.0.0.18', 4992)
-@flex_socket.puts('c1|sub slice all')
+if __FILE__ = $0
 
-@pi_socket = TCPSocket.new('10.0.0.230', 2000)
+  # @flex_socket = TCPSocket.new('10.0.0.18', 4992)
+  # @flex_socket.puts('c1|sub slice all')
 
-loop do
-  msg = @flex_socket.recv(1000)
-  @read_and_update.(msg)
-  puts Time.now
-  @pi_socket.write(@app_slices.to_json)
-  puts "Current App Slices: \n\n #{@app_slices}"
-  puts "\n--------\n\n"
+  @pi_socket = TCPSocket.new('10.0.0.230', 2000)
+
+  loop do
+    # msg = @flex_socket.recv(1000)
+    # @read_and_update.(msg)
+    pi = @pi_socket.recv(100)
+    puts Time.now
+    @pi_socket.write(@app_slices.to_json)
+    puts "Current App Slices: \n\n #{@app_slices}"
+    puts "\n--------\n\n"
+  end
+
 end
