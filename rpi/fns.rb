@@ -5,7 +5,7 @@
   end
 end
 
-@print_or_close = -> msg do
+@print_or_close = -> msg, stream do
   p "print or"
   if msg == ""
     stream.close

@@ -17,7 +17,7 @@ if __FILE__ == $0
       loop do
         msg = client.recvmsg
         p "before print or close"
-        @print_or_close.(msg[0])
+        @print_or_close.(msg[0], client)
         p Time.now.utc
         GC.start
       end
