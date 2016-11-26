@@ -44,9 +44,32 @@ end
   end
 end
 
+@slice_to_channel = -> slice do
+  slice_antenna = slice["txant"]
+  freq = slice["RF_FREQUENCY"].to_f
+  if @valid_atennas[slice_antenna] && freq >= 3.5
+    ant_to_gpio = @antenna_payload_key[slice_antenna]
+    @payload[ant_to_gpio] = true
+  elsif @valid_atennas[slice_antenna] && freq < 3.5
+    ant_to_gpio = @antenna_payload_key[slice_antenna]
+    @payload[ant_to_gpio] = false
+  end
+end
+
+@run_slices = -> do
+  if @app_slices.length > 0
+    @app_slices.each do |slice_number, slice_info|
+      if slice_info["tx"] == "1"
+        @slice_to_channel.(slice_info)
+      end
+    end
+  end
+end
+
 @read_and_update = -> msg do
   response = @format_it.(msg)
   inbound_slices = @tx_slices.(response)
   puts "inbound_slice count: #{inbound_slices.length}"
   @slice_formatter.(inbound_slices)
+  @run_slices
 end

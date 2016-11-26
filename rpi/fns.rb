@@ -19,8 +19,14 @@ end
 end
 
 @update_pins = -> payload do
-  if payload.length > 0
-    p "do something serious!!!"
+  if payload.keys[0] == "hello"
+    p "DISCOVERED"
+  elsif payload.keys.include?("15")
+    keys = payload.keys.map { |e| e.to_i }
+    binding.pry
+    values = payload.values
+    translated_payload = Hash[keys.zip(values)]
+    @app_pins = @app_pins.merge(translated_payload)
   else
     p "tis empty: #{payload}"
   end

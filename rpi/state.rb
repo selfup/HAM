@@ -1,6 +1,6 @@
 @gpio_pins = {}
 
-@default_pins = {
+@app_pins = {
   15 => false,
   16 => false,
   18 => false,
@@ -11,6 +11,6 @@
   26 => false
 }
 
-@default_pins.each do |pin, v|
+@app_pins.each do |pin, v|
   @gpio_pins[pin] = PiPiper::Pin.new(pin: pin, direction: :out)
 end
