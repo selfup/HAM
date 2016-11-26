@@ -1,7 +1,6 @@
 require 'json'
 require 'socket'
 require 'pi_piper'
-require 'pp'
 require 'pry'
 
 ## state
@@ -23,7 +22,6 @@ if __FILE__ == $0
       loop do
         msg = client.recvmsg
         @print_or_close.(msg[0], client)
-        p GC.stat
         GC.start
       end
     end
