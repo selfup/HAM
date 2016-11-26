@@ -28,6 +28,7 @@ if __FILE__ == $0
         THIS SERVER HAS BEEN UP SINCE: #{@start_time}
       ")
       loop do
+        client.sendmsg("ON IT")
         msg = client.recvmsg
         @print_or_close.(msg[0], client)
       end
