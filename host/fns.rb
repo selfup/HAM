@@ -60,13 +60,13 @@ end
 end
 
 @run_slices = -> pi do
-  p @app_slices.length
   if @app_slices.length > 0
     @app_slices.each do |slice_number, slice_info|
       if slice_info["tx"] == "1"
         @slice_to_channel.(slice_info, slice_number)
       end
     end
+    p pi
     pi.write(@payload)
     pi.close
   end
