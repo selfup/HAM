@@ -1,3 +1,4 @@
+require 'json'
 require 'socket'
 require 'pry'
 
@@ -16,8 +17,8 @@ require_relative './fns'
 loop do
   msg = @flex_socket.recv(1000)
   @read_and_update.(msg)
+  p @app_slices
   puts Time.now
-  p msg
-  @pi_socket.write('wowowow')
+  @pi_socket.write(@app_slices.to_json)
   puts "\n--------\n\n"
 end
