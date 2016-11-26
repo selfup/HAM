@@ -46,7 +46,6 @@ while true
     puts "INBOUND TRAFFIC FROM: #{stream.peeraddr[2]}"
     loop do
       msg = stream.recvmsg
-      p @gpio_pins
       @print_or_close.(msg[0])
     end
   end
