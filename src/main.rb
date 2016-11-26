@@ -16,10 +16,9 @@ require_relative './fns'
 
 loop do
   msg = @flex_socket.recv(1000)
-  p msg
   @read_and_update.(msg)
-  p @app_slices
   puts Time.now
   @pi_socket.write(@app_slices.to_json)
+  puts "Current App Slices: \n\n #{@app_slices}"
   puts "\n--------\n\n"
 end

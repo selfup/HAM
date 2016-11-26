@@ -30,12 +30,22 @@ end
   if msg == ""
     sleep(1)
     stream.close
+  else
+    @print_and_parse.(msg)
   end
-  @print_and_parse.(msg)
 end
 
 @print_and_parse = -> msg do
-  puts "json payload: #{msg.to_json}"
+  puts "json payload: #{msg}"
+  @update_pins.(JSON.parse(msg))
+end
+
+@update_pins = payload -> do
+  if payload.length > 0
+    p "do something serious!!!"
+  else
+    p payload
+  end
 end
 
 @pin_logic_gate.(@default_pins) # buid gpio_pins
