@@ -35,6 +35,8 @@ end
 end
 
 @slice_formatter = -> slices do
+  puts "slice formatter"
+  puts slices
   slices.map do |slice|
     new_values = {}
     new_slice = slice.values[0]
@@ -45,7 +47,12 @@ end
 end
 
 @read_and_update = -> msg do
+  puts 0
   response = @format_it.(msg)
+  puts 1
+  p response
   inbound_slices = @tx_slices.(response)
+  puts 2
+  puts "wowow #{inbound_slices.length}"
   @slice_formatter.(inbound_slices)
 end

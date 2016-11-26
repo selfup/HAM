@@ -2,7 +2,7 @@ require 'json'
 require 'socket'
 require 'pi_piper'
 
-@app_pins = {}
+@gpio_pins = {}
 
 @default_pins = {
   15 => false,
@@ -16,13 +16,13 @@ require 'pi_piper'
 }
 
 @default_pins.each do |pin, v|
-  @app_pins[pin] = PiPiper::Pin.new(pin: pin, direction: :out)
+  @gpio_pins[pin] = PiPiper::Pin.new(pin: pin, direction: :out)
 end
 
 @pin_logic_gate = -> pins do
   pins.each do |k, v|
-    return @app_pins[k].on if v
-    return @app_pins[k].off if !v
+    return @gpio_pins[k].on if v
+    return @gpio_pins[k].off if !v
   end
 end
 
@@ -38,7 +38,7 @@ end
   p msg
 end
 
-@pin_logic_gate.(@default_pins) # buid app_pins
+@pin_logic_gate.(@default_pins) # buid gpio_pins
 socket_server = TCPServer.open(2000)
 
 while true
@@ -46,7 +46,7 @@ while true
     puts "INBOUND TRAFFIC FROM: #{stream.peeraddr[2]}"
     loop do
       msg = stream.recvmsg
-      p @app_pins
+      p @gpio_pins
       @print_or_close.(msg[0])
     end
   end

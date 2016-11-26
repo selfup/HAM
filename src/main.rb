@@ -16,6 +16,7 @@ require_relative './fns'
 
 loop do
   msg = @flex_socket.recv(1000)
+  p msg
   @read_and_update.(msg)
   p @app_slices
   puts Time.now
