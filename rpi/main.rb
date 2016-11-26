@@ -35,7 +35,7 @@ end
 end
 
 @print_and_parse = -> msg do
-  p msg
+  puts "json payload: #{msg.to_json}"
 end
 
 @pin_logic_gate.(@default_pins) # buid gpio_pins
@@ -47,7 +47,6 @@ while true
     loop do
       msg = stream.recvmsg
       p @gpio_pins
-      puts "json payload: #{msg}"
       @print_or_close.(msg[0])
     end
   end
