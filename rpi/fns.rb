@@ -40,5 +40,6 @@ end
 
 @print_and_parse = -> msg do
   p "PARSING"
+  binding.pry
   @update_pins.(JSON.parse(msg))
 end
