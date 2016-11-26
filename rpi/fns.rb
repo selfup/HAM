@@ -11,6 +11,8 @@ end
   if msg == ""
     sleep(1)
     stream.close
+    p Time.now.utc
+    GC.start
   else
     @print_and_parse.(msg)
   end

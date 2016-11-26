@@ -66,8 +66,8 @@ end
         @slice_to_channel.(slice_info, slice_number)
       end
     end
-    p pi
     pi.write(@payload)
+    pi.write("")
     pi.close
   end
 end
