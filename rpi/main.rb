@@ -36,7 +36,6 @@ end
 end
 
 @print_and_parse = -> msg do
-  puts "json payload: #{msg}"
   @update_pins.(JSON.parse(msg))
 end
 
@@ -44,7 +43,7 @@ end
   if payload.length > 0
     p "do something serious!!!"
   else
-    p payload
+    p "tis empty: #{payload}"
   end
 end
 
