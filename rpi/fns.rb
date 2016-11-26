@@ -14,12 +14,12 @@ end
 end
 
 @update_pins = -> payload, client do
-  p payload.keys.include?("18")
-  if !payload.keys.include?("18")
+  p payload.keys.include?("17")
+  if !payload.keys.include?("17")
     p "DISCOVERED"
     client.sendmsg('hello!')
     client.sendmsg("another hello\n")
-  elsif payload.keys.include?("18")
+  elsif payload.keys.include?("17")
     p "PAYLOAD"
     p Time.now.utc
     keys = payload.keys.map { |e| e.to_i }
