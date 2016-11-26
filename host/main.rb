@@ -15,7 +15,7 @@ if __FILE__ == $0
     msg = @flex_socket.recvmsg
     @read_and_update.(msg[0])
     pi_socket.write(@payload)
-    # pi_socket.write("")
+    pi_socket.write("")
     pi_socket.close
     p pi_socket.closed?
     puts "\n--------\n\n"

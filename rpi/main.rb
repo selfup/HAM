@@ -18,8 +18,6 @@ if __FILE__ == $0
         msg = client.recvmsg
         client.close if msg == ""
         @print_or_close.(msg[0])
-        # client.close
-        # p client.closed?
         p Time.now.utc
         GC.start
       end
