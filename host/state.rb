@@ -9,7 +9,7 @@
   12 => false,
   16 => false,
   20 => false,
-  12 => false
+  21 => false
 }
 
 @valid_atennas = {
