@@ -9,7 +9,7 @@ require_relative './state'
 ## functions
 require_relative './fns'
 
-@pin_logic_gate.(@default_pins)
+@pin_logic_gate.(@app_pins)
 @start_time = Time.now.utc
 @connections = 0
 
