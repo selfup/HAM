@@ -5,14 +5,11 @@
   end
 end
 
-@print_or_close = -> msg, stream do
+@print_or_close = -> msg do
   p "print or"
   p "message: #{msg}"
   if msg == ""
     sleep(1)
-    stream.close
-    p Time.now.utc
-    GC.start
   else
     @print_and_parse.(msg)
   end

@@ -59,22 +59,19 @@ end
   p @payload
 end
 
-@run_slices = -> pi do
+@run_slices = -> do
   if @app_slices.length > 0
     @app_slices.each do |slice_number, slice_info|
       if slice_info["tx"] == "1"
         @slice_to_channel.(slice_info, slice_number)
       end
     end
-    pi.write(@payload)
-    pi.write("")
-    pi.close
   end
 end
 
-@read_and_update = -> msg, pi do
+@read_and_update = -> msg do
   response = @format_it.(msg)
   inbound_slices = @tx_slices.(response)
   @slice_formatter.(inbound_slices)
-  @run_slices.(pi)
+  @run_slices.()
 end

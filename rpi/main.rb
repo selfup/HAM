@@ -16,7 +16,11 @@ if __FILE__ == $0
     Thread.new(socket_server.accept) do |client|
       loop do
         msg = client.recvmsg
-        @print_or_close.(msg[0], client)
+        @print_or_close.(msg[0])
+        client.close
+        p client.closed?
+        p Time.now.utc
+        GC.start
       end
     end
   end
