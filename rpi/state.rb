@@ -1,14 +1,14 @@
 @gpio_pins = {}
 
 @app_pins = {
-  15 => false,
-  16 => false,
   18 => false,
-  19 => false,
-  21 => false,
-  22 => false,
   23 => false,
-  26 => false
+  24 => false,
+  25 => false,
+  12 => false,
+  16 => false,
+  20 => false,
+  12 => false
 }
 
 @app_pins.each do |pin, v|

@@ -2,14 +2,14 @@
 @app_pins = {}
 
 @payload = {
-  15 => false,
-  16 => false,
   18 => false,
-  19 => false,
-  21 => false,
-  22 => false,
   23 => false,
-  26 => false,
+  24 => false,
+  25 => false,
+  12 => false,
+  16 => false,
+  20 => false,
+  12 => false
 }
 
 @valid_atennas = {
@@ -17,5 +17,5 @@
 }
 
 @antenna_payload_key = {
-  "ANT2" => 15
+  "ANT2" => 18
 }
