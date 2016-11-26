@@ -7,7 +7,6 @@ end
 
 @print_or_close = -> msg do
   p "print or"
-  p msg
   if msg == ""
     stream.close
   else
@@ -16,8 +15,6 @@ end
 end
 
 @update_pins = -> payload do
-  p payload
-  p payload.keys.include?("15")
   if !payload.keys.include?("15")
     p "DISCOVERED"
   elsif payload.keys.include?("15")
@@ -39,6 +36,5 @@ end
 end
 
 @print_and_parse = -> msg do
-  p msg
   @update_pins.(JSON.parse(msg))
 end
