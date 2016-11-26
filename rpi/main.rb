@@ -20,6 +20,7 @@ if __FILE__ == $0
       puts "INBOUND TRAFFIC FROM: #{client.peeraddr[2]}"
       loop do
         msg = client.recvmsg
+        puts msg
         client.puts('message received')
         @print_or_close.(msg[0])
         client.puts('message parsed')
