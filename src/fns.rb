@@ -44,16 +44,8 @@ end
   end
 end
 
-pin_logic_gate = -> pins do
-  pins.each do |k, v|
-    return @app_pins[k].on if v
-    return @app_pins[k].off if !v
-  end
-end
-
 @read_and_update = -> msg do
   response = @format_it.(msg)
   inbound_slices = @tx_slices.(response)
   @slice_formatter.(inbound_slices)
-  pin_logic_gate.(@default_pins)
 end

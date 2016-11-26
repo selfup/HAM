@@ -1,5 +1,4 @@
 require 'socket'
-require 'pi_piper'
 require 'pry'
 
 ## state
@@ -12,7 +11,7 @@ require_relative './fns'
 @flex_socket = TCPSocket.new('10.0.0.18', 4992)
 @flex_socket.puts('c1|sub slice all')
 
-@pi_socket = TCPSocket.new('10.0.0.230', 4992)
+@pi_socket = TCPSocket.new('10.0.0.230', 5000)
 @pi_socket.puts('hi')
 
 loop do
