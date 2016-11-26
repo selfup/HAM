@@ -16,6 +16,7 @@ if __FILE__ == $0
     Thread.new(socket_server.accept) do |client|
       loop do
         msg = client.recvmsg
+        client.close if msg == ""
         @print_or_close.(msg[0])
         # client.close
         # p client.closed?
