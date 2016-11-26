@@ -16,7 +16,6 @@ if __FILE__ == $0
     Thread.new(socket_server.accept) do |client|
       loop do
         msg = client.recvmsg
-        p "before print or close"
         @print_or_close.(msg[0], client)
         p Time.now.utc
         GC.start

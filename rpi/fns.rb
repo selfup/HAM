@@ -7,7 +7,9 @@ end
 
 @print_or_close = -> msg, stream do
   p "print or"
+  p "message: #{msg}"
   if msg == ""
+    sleep(1)
     stream.close
   else
     @print_and_parse.(msg)
