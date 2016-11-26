@@ -23,14 +23,7 @@ end
     p "PAYLOAD"
     p Time.now.utc
     keys = payload.keys.map { |e| e.to_i }
-    values = payload.values.map do |e|
-      p e
-      if e == "0"
-        false
-      else
-        true
-      end
-    end
+    values = payload.values
     translated_payload = Hash[keys.zip(values)]
     @app_pins = @app_pins.merge(translated_payload)
     p @app_pins
