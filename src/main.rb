@@ -15,13 +15,13 @@ if __FILE__ == $0
   # @flex_socket.puts('c1|sub slice all')
 
   @pi_socket = TCPSocket.new('10.0.0.230', 2000)
+  @pi_socket.write({hi: "hello"}.to_json)
 
   loop do
     # msg = @flex_socket.recv(1000)
     # @read_and_update.(msg)
     pi = @pi_socket.recv(100)
     puts Time.now
-    @pi_socket.write({hi: "hello"}.to_json)
     @pi_socket.write(@app_slices.to_json)
     puts "Current App Slices: \n\n #{@app_slices}"
     puts "\n--------\n\n"

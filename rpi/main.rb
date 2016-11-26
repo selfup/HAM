@@ -1,6 +1,7 @@
 require 'json'
 require 'socket'
 require 'pi_piper'
+require 'pry'
 
 ## state
 require_relative './state'
@@ -21,9 +22,10 @@ if __FILE__ == $0
       loop do
         msg = client.recvmsg
         puts msg
-        client.puts('message received')
+        binding.pry
+        client.write('message received')
         @print_or_close.(msg[0])
-        client.puts('message parsed')
+        client.write('message parsed')
       end
     end
   end
