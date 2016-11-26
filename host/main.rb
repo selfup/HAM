@@ -23,7 +23,7 @@ if __FILE__ == $0
 
     # READ RPI MESSAGES AND SEND PAYLOAD
     pi = @pi_socket.recvmsg
-    @pi_socket.write({hi: "hello"}.to_json)
+    @pi_socket.write({"hello" => "hello"}.to_json)
     puts pi[0]
 
     # HOST STDOUT

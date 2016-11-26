@@ -19,6 +19,7 @@ end
 end
 
 @update_pins = -> payload, client do
+  puts payload
   if payload.keys[0] == "hello"
     p "DISCOVERED"
     client.sendmsg('hello!')
