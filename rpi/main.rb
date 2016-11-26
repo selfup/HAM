@@ -22,16 +22,15 @@ if __FILE__ == $0
     Thread.new(socket_server.accept) do |client|
       @connections += 1
       puts "INBOUND TRAFFIC FROM: #{client.peeraddr[2]}"
+      client.sendmsg("
+        CONNECTION ESTABLISHED
+        YOUR CONNECTION NUMBER IS: #{@connections}
+        THIS SERVER HAS BEEN UP SINCE: #{@start_time}
+        THIS SERVER HAS HAD A TOTAL OF #{@connections} CONNECTIONS
+      ")
       loop do
         msg = client.recvmsg
         puts msg
-        binding.pry
-        client.sendmsg("
-          CONNECTION ESTABLISHED
-          THIS SERVER HAS BEEN UP SINCE: #{@start_time}
-          THIS SERVER HAS HAD A TOTAL OF #{@connections} CONNECTIONS
-
-        ")
         @print_or_close.(msg[0])
       end
     end
