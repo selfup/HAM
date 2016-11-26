@@ -47,6 +47,7 @@ while true
     loop do
       msg = stream.recvmsg
       p @gpio_pins
+      puts "json payload: #{msg}"
       @print_or_close.(msg[0])
     end
   end
