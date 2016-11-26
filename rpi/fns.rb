@@ -1,7 +1,7 @@
 @pin_logic_gate = -> pins do
   pins.each do |k, v|
-    return @gpio_pins[k].on if v
-    return @gpio_pins[k].off if !v
+    @gpio_pins[k].on if v
+    @gpio_pins[k].off if !v
   end
 end
 
@@ -24,6 +24,7 @@ end
     p Time.now.utc
     keys = payload.keys.map { |e| e.to_i }
     values = payload.values.map do |e|
+      p e
       if e == "0"
         false
       else
