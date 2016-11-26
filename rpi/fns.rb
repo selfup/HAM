@@ -14,10 +14,6 @@ end
   end
 end
 
-@print_and_parse = -> msg, client do
-  @update_pins.(JSON.parse(msg, client))
-end
-
 @update_pins = -> payload, client do
   puts payload
   if payload.keys[0] == "hello"
@@ -33,4 +29,8 @@ end
     client.sendmsg("\n\nWhat was that?\n\n")
     p "WHAT JUST HAPPENED"
   end
+end
+
+@print_and_parse = -> msg, client do
+  @update_pins.(JSON.parse(msg), client))
 end
