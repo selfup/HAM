@@ -27,6 +27,7 @@ end
     translated_payload = Hash[keys.zip(values)]
     @app_pins = @app_pins.merge(translated_payload)
     p @app_pins
+    @pin_logic_gate(@app_pins)
   else
     p "WHAT JUST HAPPENED"
   end
