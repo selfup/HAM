@@ -40,7 +40,7 @@ end
   @update_pins.(JSON.parse(msg))
 end
 
-@update_pins = payload -> do
+@update_pins = -> payload do
   if payload.length > 0
     p "do something serious!!!"
   else
