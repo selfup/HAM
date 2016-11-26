@@ -1,3 +1,4 @@
+require 'json'
 require 'socket'
 require 'pi_piper'
 
@@ -18,17 +19,34 @@ require 'pi_piper'
   @app_pins[pin] = PiPiper::Pin.new(pin: pin, direction: :out)
 end
 
-pin_logic_gate = -> pins do
+@pin_logic_gate = -> pins do
   pins.each do |k, v|
     return @app_pins[k].on if v
     return @app_pins[k].off if !v
   end
 end
 
-@socket = TCPSocket.new('0.0.0.0', 5000)
+@print_or_close = -> msg do
+  if msg == ""
+    sleep(1)
+    stream.close
+  end
+  @print_and_parse.(msg)
+end
 
-loop do
-  msg = @socket.recv(1000)
-  puts msg
-  pin_logic_gate.(@default_pins)
+@print_and_parse = -> msg do
+  p msg
+end
+
+@pin_logic_gate.(@default_pins) # buid app_pins
+socket_server = TCPServer.open(2000)
+
+while true
+  Thread.new(socket_server.accept) do |stream|
+    puts "INBOUND TRAFFIC FROM: #{stream.peeraddr[2]}"
+    loop do
+      msg = stream.recvmsg
+      @print_or_close.(msg[0])
+    end
+  end
 end

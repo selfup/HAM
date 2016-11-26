@@ -12,7 +12,6 @@ require_relative './fns'
 @flex_socket.puts('c1|sub slice all')
 
 @pi_socket = TCPSocket.new('10.0.0.230', 5000)
-@pi_socket.puts('hi')
 
 loop do
   msg = @flex_socket.recv(1000)
