@@ -18,7 +18,6 @@ if __FILE__ == $0
 
   while true
     Thread.new(socket_server.accept) do |client|
-      puts "INBOUND TRAFFIC FROM: #{client.peeraddr[2]}"
       loop do
         msg = client.recvmsg
         @print_or_close.(msg[0], client)
