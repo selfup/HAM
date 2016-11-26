@@ -44,9 +44,10 @@ end
   end
 end
 
-@slice_to_channel = -> slice do
+@slice_to_channel = -> slice, num do
   slice_antenna = slice["txant"]
-  freq = slice["RF_FREQUENCY"].to_f
+  freq = slice["RF_frequency"].to_f
+
   if @valid_atennas[slice_antenna] && freq >= 3.5
     ant_to_gpio = @antenna_payload_key[slice_antenna]
     @payload[ant_to_gpio] = true
@@ -54,28 +55,26 @@ end
     ant_to_gpio = @antenna_payload_key[slice_antenna]
     @payload[ant_to_gpio] = false
   end
+
+  p @payload
 end
 
-@run_slices = -> do
-  puts "--OK--"
-  puts @app_slices.length
-  puts "--OK--"
+@run_slices = -> pi do
+  p @app_slices.length
   if @app_slices.length > 0
     @app_slices.each do |slice_number, slice_info|
       if slice_info["tx"] == "1"
-        @slice_to_channel.(slice_info)
+        @slice_to_channel.(slice_info, slice_number)
       end
     end
+    pi.write(@payload)
+    pi.close
   end
 end
 
 @read_and_update = -> msg, pi do
-  ok = {"15" => "0", "16" => "0"}.to_json
-  pi.write(ok)
-  pi.close
   response = @format_it.(msg)
   inbound_slices = @tx_slices.(response)
-  puts "inbound_slice count: #{inbound_slices.length}"
   @slice_formatter.(inbound_slices)
-  @run_slices
+  @run_slices.(pi)
 end
