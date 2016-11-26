@@ -15,22 +15,30 @@ end
 end
 
 @update_pins = -> payload, client do
-  puts payload
-  if payload.keys[0] == "hello"
+  p payload.keys.include?("15")
+  if !payload.keys.include?("15")
     p "DISCOVERED"
     client.sendmsg('hello!')
+    client.sendmsg("another hello\n")
   elsif payload.keys.include?("15")
+    p "PAYLOAD"
+    p Time.now.utc
     keys = payload.keys.map { |e| e.to_i }
-    values = payload.values
+    values = payload.values.map do |e|
+      if e == "0"
+        false
+      else
+        true
+      end
+    end
     translated_payload = Hash[keys.zip(values)]
     @app_pins = @app_pins.merge(translated_payload)
-    client.sendmsg("\n\nNEW PIN STATE: #{@app_pins.to_json}\n\n")
+    p @app_pins
   else
-    client.sendmsg("\n\nWhat was that?\n\n")
     p "WHAT JUST HAPPENED"
   end
 end
 
 @print_and_parse = -> msg, client do
-  @update_pins.(JSON.parse(msg), client))
+  @update_pins.(JSON.parse(msg), client)
 end

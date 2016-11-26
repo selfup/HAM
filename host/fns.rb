@@ -69,7 +69,10 @@ end
   end
 end
 
-@read_and_update = -> msg do
+@read_and_update = -> msg, pi do
+  ok = {"15" => "0", "16" => "0"}.to_json
+  pi.write(ok)
+  sleep(0.5)
   response = @format_it.(msg)
   inbound_slices = @tx_slices.(response)
   puts "inbound_slice count: #{inbound_slices.length}"
