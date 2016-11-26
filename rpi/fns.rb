@@ -7,8 +7,8 @@ end
 
 @print_or_close = -> msg, client do
   if msg == ""
-    sleep(1)
     stream.close
+    GC.start
   else
     @print_and_parse.(msg, client)
   end
