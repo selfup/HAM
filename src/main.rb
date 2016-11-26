@@ -1,4 +1,7 @@
-return puts "RPI ARMV7 ONLY"; exit if !RUBY_PLATFORM.include?("armv7l-linux")
+if !RUBY_PLATFORM.include?("armv7l-linux")
+  puts "RPI ARMV7 ONLY"
+  exit
+end
 
 require 'socket'
 require 'pi_piper'
