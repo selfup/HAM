@@ -1,8 +1,3 @@
-if !RUBY_PLATFORM.include?("armv7l-linux")
-  puts "RPI ARMV7 ONLY"
-  exit
-end
-
 require 'socket'
 require 'pi_piper'
 require 'pry'
@@ -14,11 +9,14 @@ require_relative './state'
 require_relative './fns'
 
 ## main
-@socket = TCPSocket.new('10.0.0.18', 4992)
-@socket.puts('c1|sub slice all')
+@flex_socket = TCPSocket.new('10.0.0.18', 4992)
+@flex_socket.puts('c1|sub slice all')
+
+@pi_socket = TCPSocket.new('10.0.0.230', 4992)
+@pi_socket.puts('hi')
 
 loop do
-  msg = @socket.recv(1000)
+  msg = @flex_socket.recv(1000)
   @read_and_update.(msg)
   puts Time.now
   puts "\n--------\n\n"
