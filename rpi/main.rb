@@ -31,6 +31,7 @@ if __FILE__ == $0
         client.sendmsg("ON IT")
         msg = client.recvmsg
         @print_or_close.(msg[0], client)
+        GC.start
       end
     end
   end
