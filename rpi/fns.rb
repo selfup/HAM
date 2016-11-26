@@ -5,29 +5,31 @@
   end
 end
 
-@print_or_close = -> msg do
+@print_or_close = -> msg, client do
   if msg == ""
     sleep(1)
     stream.close
   else
-    @print_and_parse.(msg)
+    @print_and_parse.(msg, client)
   end
 end
 
-@print_and_parse = -> msg do
+@print_and_parse = -> msg, client do
   @update_pins.(JSON.parse(msg))
 end
 
-@update_pins = -> payload do
+@update_pins = -> payload, client do
   if payload.keys[0] == "hello"
     p "DISCOVERED"
+    client.sendmsg('hello!')
   elsif payload.keys.include?("15")
     keys = payload.keys.map { |e| e.to_i }
-    binding.pry
     values = payload.values
     translated_payload = Hash[keys.zip(values)]
     @app_pins = @app_pins.merge(translated_payload)
+    client.sendmsg("\n\nNEW PIN STATE: #{@app_pins.to_json}\n\n")
   else
-    p "tis empty: #{payload}"
+    client.sendmsg("\n\nWhat was that?\n\n")
+    p "WHAT JUST HAPPENED"
   end
 end
