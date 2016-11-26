@@ -14,7 +14,7 @@ if __FILE__ == $0
     pi_socket = TCPSocket.new('10.0.0.230', 2000)
     msg = @flex_socket.recvmsg
     @read_and_update.(msg[0])
-    pi_socket.write(@payload)
+    pi_socket.write(@payload.to_json)
     pi_socket.write("")
     pi_socket.close
     p pi_socket.closed?
