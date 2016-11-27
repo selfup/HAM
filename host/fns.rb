@@ -66,14 +66,16 @@ end
   end
 end
 
+pi_logic = -> pi do
+  p @payload
+  pi.write(@payload.dup.to_json)
+  pi.close
+end
+
 @read_and_update = -> msg, pi do
   response = @format_it.(msg)
   inbound_slices = @tx_slices.(response)
-  puts "inbound_slice count: #{inbound_slices.length}"
   @slice_formatter.(inbound_slices)
   @run_slices.()
-  outbound = @payload.dup
-  p outbound
-  pi.write(outbound.to_json)
-  pi.close
+  pi_logic.(pi)
 end
