@@ -15,6 +15,7 @@ if __FILE__ == $0
         @print_or_close.(client.recvmsg[0], client)
         p Time.now.utc
         p @app_pins
+        p "<><><><><><><><><><><><><><><><><><><><>"
         GC.start
       end
     end
