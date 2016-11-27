@@ -11,10 +11,8 @@ if __FILE__ == $0
   loop do
     pi_socket = TCPSocket.new('10.0.0.230', 2000)
     @read_and_update.(@flex_socket.recv(1000), pi_socket)
-    @pi_logic.(pi_socket)
     puts "--------------------------------------"
     puts Time.now.utc
-    puts @app_pins
     puts @payload
     puts "App Slices: #{@app_slices.keys.length}"
     puts "--------------------------------------"
