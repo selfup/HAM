@@ -18,14 +18,9 @@ end
   p payload.keys.include?("17")
   if !payload.keys.include?("17")
     p "DISCOVERED"
-    client.sendmsg('hello!')
-    client.sendmsg("another hello\n")
   elsif payload.keys.include?("17")
-    p "PAYLOAD"
-    p Time.now.utc
     keys = payload.keys.map { |e| e.to_i }
-    values = payload.values
-    translated_payload = Hash[keys.zip(values)]
+    translated_payload = Hash[keys.zip(payload.values)]
     @app_pins = @app_pins.merge(translated_payload)
     @pin_logic_gate.(@app_pins)
   else
