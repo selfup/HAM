@@ -20,5 +20,4 @@ end
     @gpio_pins[k].on if v
     @gpio_pins[k].off if !v
   end
-  p @app_pins
 end

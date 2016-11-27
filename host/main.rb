@@ -14,7 +14,7 @@ if __FILE__ == $0
     @pi_logic.(pi_socket)
     sleep(1)
     puts "--------------------------------------"
-    puts Time.now
+    puts Time.now.utc
     puts @app_pins
     puts @payload
     puts "App Slices: #{@app_slices.keys.length}"
