@@ -68,25 +68,13 @@ host_tests = {
     on_slice = "af|slice 3 tx=1 txant=ANT2 RF_frequency=3.12"
 
     state_payload = {
-      17=>true,
-      27=>false,
-      22=>false,
-      23=>false,
-      24=>false,
-      25=>false,
-      5=>false,
-      6=>false
+      17=>true, 27=>false, 22=>false, 23=>false,
+      24=>false, 25=>false, 5=>false, 6=>false
     }
 
     off_state_payload = {
-      17=>false,
-      27=>false,
-      22=>false,
-      23=>false,
-      24=>false,
-      25=>false,
-      5=>false,
-      6=>false
+      17=>false, 27=>false, 22=>false, 23=>false,
+      24=>false, 25=>false, 5=>false, 6=>false
     }
 
     off_slice_1 = "af|slice 3 tx=0 txant=ANT1 RF_frequency=3.88"
