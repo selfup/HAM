@@ -18,7 +18,7 @@ if __FILE__ == $0
     pi_socket = TCPSocket.new('10.0.0.230', 2000)
     # READ AND PARSE FLEX MESSAGES
     msg = @flex_socket.recv(1000)
-    @read_and_update.(msg[0], pi_socket)
+    @read_and_update.(msg, pi_socket)
 
     # READ RPI MESSAGES AND SEND PAYLOAD
 
