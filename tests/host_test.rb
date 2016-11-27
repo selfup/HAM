@@ -69,6 +69,7 @@ host_tests = {
       expected1, @slice_formatter.(@tx_slices.(@format_it.(pin_17_on_slice)))
     )
 
+    p "it ensures that the gpio 17 pin state is managed as should be"
     on_17_state_payload = {
       17=>true,
       27=>false,
@@ -80,7 +81,6 @@ host_tests = {
       6=>false
     }
 
-    p "it ensures that the gpio 17 pin stays off"
     off_state_payload = {
       17=>false,
       27=>false,
