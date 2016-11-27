@@ -1,6 +1,18 @@
 require_relative './test_helper'
 require_relative './../host/main'
 
+class MockPi
+  def write(json)
+    json
+  end
+
+  def close
+    "closed"
+  end
+end
+
+mock_pi = MockPi.new
+
 host_tests = {
   host_vars: -> {
     VAR_TEST = Minitest::Test.new('host variables')
@@ -24,18 +36,6 @@ host_tests = {
   host_lambdas: -> {
     HOST_FNS = Minitest::Test.new('host lamdbas')
 
-    class MockPi
-      def write(json)
-        json
-      end
-
-      def close
-        "closed"
-      end
-    end
-
-    mock_pi = MockPi.new
-
     p "it formats all incoming messages into a pre-parse format"
     # the mock method 'close' returns 'closed' proving the 'pi_logic' lamdba
     # was called at the end of '@read_and_update'
@@ -55,8 +55,8 @@ host_tests = {
     )
 
     p "it does a final format job on each slice for JSON payload prep"
-    pin_17_on_slice = "af|slice 3 tx=1 txant=ANT2 RF_frequency=3.12"
-    expected1 = [{"tx"=>"1", "txant"=>"ANT2", "RF_frequency"=>"3.12"}]
+    on_slice = "af|slice 3 tx=1 txant=ANT2 RF_frequency=3.12"
+    expected = [{"tx"=>"1", "txant"=>"ANT2", "RF_frequency"=>"3.12"}]
 
     HOST_FNS.assert_equal(
       [], @slice_formatter.(@tx_slices.(@format_it.("af|324 sfsf=43")))
@@ -66,11 +66,16 @@ host_tests = {
     )
 
     HOST_FNS.assert_equal(
-      expected1, @slice_formatter.(@tx_slices.(@format_it.(pin_17_on_slice)))
+      expected, @slice_formatter.(@tx_slices.(@format_it.(on_slice)))
     )
+  },
+  pin_state: -> {
+    GPIO_PIN = Minitest::Test.new('host lamdbas')
 
     p "it ensures that the gpio 17 pin state is managed as should be"
-    on_17_state_payload = {
+    on_slice = "af|slice 3 tx=1 txant=ANT2 RF_frequency=3.12"
+
+    state_payload = {
       17=>true,
       27=>false,
       22=>false,
@@ -92,50 +97,36 @@ host_tests = {
       6=>false
     }
 
-    pin_17_off_slice_1 = "af|slice 3 tx=0 txant=ANT1 RF_frequency=3.88"
-    pin_17_off_slice_2 = "af|slice 3 tx=1 txant=ANT2 RF_frequency=3.59"
+    off_slice_1 = "af|slice 3 tx=0 txant=ANT1 RF_frequency=3.88"
+    off_slice_2 = "af|slice 3 tx=1 txant=ANT2 RF_frequency=3.59"
 
-    pin_17_no__change_slice_1 = "af|slice 3 tx=0 txant=ANT2 RF_frequency=1.2"
-    pin_17_no__change_slice_2 = "af|slice 3 tx=0 txant=ANT1 RF_frequency=1.2"
+    change_slice_1 = "af|slice 3 tx=0 txant=ANT2 RF_frequency=1.2"
+    change_slice_2 = "af|slice 3 tx=0 txant=ANT1 RF_frequency=1.2"
 
-    HOST_FNS.assert_equal(
-      "closed", @read_and_update.(pin_17_off_slice_1, mock_pi)
-    )
-    HOST_FNS.assert_equal(off_state_payload, @payload)
+    GPIO_PIN.assert_equal("closed", @read_and_update.(off_slice_1, mock_pi))
+    GPIO_PIN.assert_equal(off_state_payload, @payload)
 
-    HOST_FNS.assert_equal(
-      "closed", @read_and_update.(pin_17_on_slice, mock_pi)
-    )
-    HOST_FNS.assert_equal(on_17_state_payload, @payload)
+    GPIO_PIN.assert_equal("closed", @read_and_update.(on_slice, mock_pi))
+    GPIO_PIN.assert_equal(state_payload, @payload)
 
-    HOST_FNS.assert_equal(
-      "closed", @read_and_update.(pin_17_off_slice_2, mock_pi)
-    )
-    HOST_FNS.assert_equal(off_state_payload, @payload)
+    GPIO_PIN.assert_equal("closed", @read_and_update.(off_slice_2, mock_pi))
+    GPIO_PIN.assert_equal(off_state_payload, @payload)
 
-    HOST_FNS.assert_equal(
-      "closed", @read_and_update.(pin_17_on_slice, mock_pi)
-    )
-    HOST_FNS.assert_equal(on_17_state_payload, @payload)
+    GPIO_PIN.assert_equal("closed", @read_and_update.(on_slice, mock_pi))
+    GPIO_PIN.assert_equal(state_payload, @payload)
 
     # doesn't change state since tx is off
-    HOST_FNS.assert_equal(
-      "closed", @read_and_update.(pin_17_no__change_slice_1, mock_pi)
-    )
-    HOST_FNS.assert_equal(on_17_state_payload, @payload)
+    GPIO_PIN.assert_equal("closed", @read_and_update.(change_slice_1, mock_pi))
+    GPIO_PIN.assert_equal(state_payload, @payload)
 
     # doesn't change state since ANT2 is not the 'txant' is off
-    HOST_FNS.assert_equal(
-      "closed", @read_and_update.(pin_17_no__change_slice_2, mock_pi)
-    )
-    HOST_FNS.assert_equal(on_17_state_payload, @payload)
+    GPIO_PIN.assert_equal("closed", @read_and_update.(change_slice_2, mock_pi))
+    GPIO_PIN.assert_equal(state_payload, @payload)
 
-    HOST_FNS.assert_equal(
-      "closed", @read_and_update.(pin_17_off_slice_2, mock_pi)
-    )
-    HOST_FNS.assert_equal(off_state_payload, @payload)
+    GPIO_PIN.assert_equal("closed", @read_and_update.(off_slice_2, mock_pi))
+    GPIO_PIN.assert_equal(off_state_payload, @payload)
 
-    @test_output.(HOST_FNS)
+    @test_output.(GPIO_PIN)
   }
 }
 
