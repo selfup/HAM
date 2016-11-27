@@ -1,37 +1,27 @@
+@read_and_update = -> msg, pi do
+  response = @format_it.(msg)
+  inbound_slices = @tx_slices.(response)
+  @slice_formatter.(inbound_slices)
+  @run_slices.()
+  @pi_logic.(pi)
+end
+
 @format_it = -> msg do
-  msg
-    .dup
-    .split("\n")
-    .map { |e| e.split(' ') }
-    .map do |e|
-      key = e[0]
-      e.shift
-      {key => e}
-    end
+  msg.dup.split("\n").map { |e| e.split(' ') }.map do |e|
+    key = e[0]
+    e.shift
+    {key => e}
+  end
 end
 
 @tx_slices = -> response do
-  response
-    .map do |e|
-      type = e.keys[0].split('|')
-      if type[1] == "slice"
-        {"slice" => e.values[0]}
-      else
-        e.keys[0] = 0
-      end
-    end.select { |e| e != 0 }
-end
-
-@app_state_updater = -> new_slice, new_values, slice_number do
-  pre_format = new_slice
-    .map { |e| e.split("=") }
-    .each { |e| new_values[e[0]] = e[1] }
-
-  if !@app_slices.keys.include?(slice_number)
-    @app_slices[slice_number] = new_values
-  else
-    @app_slices[slice_number] = @app_slices[slice_number].merge(new_values)
-  end
+  response.map do |e|
+    if e.keys[0].split('|')[1] == "slice"
+      {"slice" => e.values[0]}
+    else
+      e.keys[0] = 0
+    end
+  end.select { |e| e != 0 }
 end
 
 @slice_formatter = -> slices do
@@ -44,15 +34,12 @@ end
   end
 end
 
-@slice_to_channel = -> slice do
-  slice_antenna = slice["txant"]
-  freq = slice["RF_frequency"].to_f
-  if @valid_atennas[slice_antenna] && freq >= 3.5
-    ant_to_gpio = @antenna_payload_key[slice_antenna]
-    @payload[ant_to_gpio] = false
-  elsif @valid_atennas[slice_antenna] && freq < 3.5
-    ant_to_gpio = @antenna_payload_key[slice_antenna]
-    @payload[ant_to_gpio] = true
+@app_state_updater = -> slice, values, num do
+  pre_format = slice.map { |e| e.split("=") }.each { |e| values[e[0]] = e[1] }
+  if !@app_slices.keys.include?(num)
+    @app_slices[num] = values
+  else
+    @app_slices[num] = @app_slices[num].merge(values)
   end
 end
 
@@ -66,16 +53,15 @@ end
   end
 end
 
-@pi_logic = -> pi do
-  p @payload
-  pi.write(@payload.dup.to_json)
-  pi.close
+@slice_to_channel = -> slice do
+  slice_antenna = slice["txant"]
+  freq = slice["RF_frequency"].to_f
+  ant_to_gpio = @antenna_payload_key[slice_antenna]
+  @payload[ant_to_gpio] = false if @valid_atennas[slice_antenna] && freq >= 3.5
+  @payload[ant_to_gpio] = true if @valid_atennas[slice_antenna] && freq < 3.5
 end
 
-@read_and_update = -> msg, pi do
-  response = @format_it.(msg)
-  inbound_slices = @tx_slices.(response)
-  @slice_formatter.(inbound_slices)
-  @run_slices.()
-  @pi_logic.(pi)
+@pi_logic = -> pi do
+  pi.write(@payload.dup.to_json)
+  pi.close
 end

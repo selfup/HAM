@@ -1,16 +1,8 @@
-@pin_logic_gate = -> pins do
-  pins.each do |k, v|
-    @gpio_pins[k].on if v
-    @gpio_pins[k].off if !v
-  end
-  p @app_pins
-end
-
 @print_or_close = -> msg, client do
   if msg == ""
     stream.close
   else
-    @print_and_parse.(msg, client)
+    @update_pins.(JSON.parse(msg), client)
   end
 end
 
@@ -23,6 +15,10 @@ end
   end
 end
 
-@print_and_parse = -> msg, client do
-  @update_pins.(JSON.parse(msg), client)
+@pin_logic_gate = -> pins do
+  pins.each do |k, v|
+    @gpio_pins[k].on if v
+    @gpio_pins[k].off if !v
+  end
+  p @app_pins
 end
