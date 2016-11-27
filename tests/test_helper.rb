@@ -13,4 +13,14 @@ require 'minitest/test'
   all.values.each { |e| e.() }
 }
 
+class MockPi
+  def write(json)
+    json
+  end
+
+  def close
+    "closed"
+  end
+end
+
 puts "Starting Tests\n\n"

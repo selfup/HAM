@@ -1,16 +1,6 @@
 require_relative './test_helper'
 require_relative './../host/main'
 
-class MockPi
-  def write(json)
-    json
-  end
-
-  def close
-    "closed"
-  end
-end
-
 mock_pi = MockPi.new
 
 host_tests = {
@@ -68,9 +58,11 @@ host_tests = {
     HOST_FNS.assert_equal(
       expected, @slice_formatter.(@tx_slices.(@format_it.(on_slice)))
     )
+
+    @test_output.(HOST_FNS)
   },
   pin_state: -> {
-    GPIO_PIN = Minitest::Test.new('host lamdbas')
+    GPIO_PIN = Minitest::Test.new('host pin payload state')
 
     p "it ensures that the gpio 17 pin state is managed as should be"
     on_slice = "af|slice 3 tx=1 txant=ANT2 RF_frequency=3.12"
