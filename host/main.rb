@@ -1,6 +1,6 @@
 require 'json'
 require 'socket'
-require 'pry'
+# require 'pry'
 
 ## state
 require_relative './state'
