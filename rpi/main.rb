@@ -13,10 +13,10 @@ if __FILE__ == $0
     Thread.new(socket_server.accept) do |client|
       loop do
         @print_or_close.(client.recvmsg[0], client)
-        puts "|||||||||||||||||||||||||||||||||||||"
+        puts "==="
         p Time.now.utc
         p @app_pins
-        puts "|||||||||||||||||||||||||||||||||||||"
+        puts "==="
         GC.start
       end
     end
