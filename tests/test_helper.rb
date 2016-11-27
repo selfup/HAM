@@ -1,6 +1,5 @@
 require 'pry'
 require 'minitest/test'
-require 'ostruct'
 
 @test_output = -> constant {
   puts "\n\n"
