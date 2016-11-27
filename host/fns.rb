@@ -66,7 +66,7 @@ end
   end
 end
 
-pi_logic = -> pi do
+@pi_logic = -> pi do
   p @payload
   pi.write(@payload.dup.to_json)
   pi.close
@@ -77,5 +77,5 @@ end
   inbound_slices = @tx_slices.(response)
   @slice_formatter.(inbound_slices)
   @run_slices.()
-  pi_logic.(pi)
+  @pi_logic.(pi)
 end

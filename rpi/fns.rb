@@ -3,6 +3,7 @@
     @gpio_pins[k].on if v
     @gpio_pins[k].off if !v
   end
+  p @app_pins
 end
 
 @print_or_close = -> msg, client do
@@ -26,7 +27,6 @@ end
     values = payload.values
     translated_payload = Hash[keys.zip(values)]
     @app_pins = @app_pins.merge(translated_payload)
-    p @app_pins
     @pin_logic_gate(@app_pins)
   else
     p "WHAT JUST HAPPENED"

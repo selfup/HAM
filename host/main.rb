@@ -22,8 +22,7 @@ if __FILE__ == $0
 
     # HOST STDOUT
     puts Time.now
-    puts "Current App Slices: \n\n #{@app_slices.keys}"
-    puts "--------\n\n"
+    puts "App Slices: \n\n #{@app_slices.keys} -- \n\n"
   end
 
 end
