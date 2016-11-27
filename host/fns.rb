@@ -44,16 +44,36 @@ end
   end
 end
 
-pin_logic_gate = -> pins do
-  pins.each do |k, v|
-    return @app_pins[k].on if v
-    return @app_pins[k].off if !v
+@slice_to_channel = -> slice do
+  slice_antenna = slice["txant"]
+  freq = slice["RF_frequency"].to_f
+  if @valid_atennas[slice_antenna] && freq >= 3.5
+    ant_to_gpio = @antenna_payload_key[slice_antenna]
+    @payload[ant_to_gpio] = false
+  elsif @valid_atennas[slice_antenna] && freq < 3.5
+    ant_to_gpio = @antenna_payload_key[slice_antenna]
+    @payload[ant_to_gpio] = true
   end
 end
 
-@read_and_update = -> msg do
+@run_slices = -> do
+  if @app_slices.length > 0
+    @app_slices.each do |slice_number, slice_info|
+      if slice_info["tx"] == "1"
+        @slice_to_channel.(slice_info)
+      end
+    end
+  end
+end
+
+@read_and_update = -> msg, pi do
   response = @format_it.(msg)
   inbound_slices = @tx_slices.(response)
+  puts "inbound_slice count: #{inbound_slices.length}"
   @slice_formatter.(inbound_slices)
-  pin_logic_gate.(@default_pins)
+  @run_slices.()
+  outbound = @payload.dup
+  p outbound
+  pi.write(outbound.to_json)
+  pi.close
 end
