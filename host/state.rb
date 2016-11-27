@@ -1,5 +1,4 @@
 @app_slices = {}
-@app_pins = {}
 
 @payload = {
   17 => false,
